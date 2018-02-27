@@ -1,0 +1,35 @@
+<div class="content">
+	<div class="logo"></div>
+	<div class="code">
+		<div *ngIf="errorCode == 404" class="not-found">
+			404
+		</div>
+		<div *ngIf="errorCode == 403" class="no-access">
+			403
+		</div>
+	</div>
+	<div class="title">
+		<div *ngIf="errorCode == 404" class="not-found">
+			Page not found
+		</div>
+		<div *ngIf="errorCode == 403" class="no-access">
+			Access denied
+		</div>
+	</div>
+	<div class="text">
+		<div *ngIf="errorCode == 404" class="not-found">
+			<div>The Page you looking for doesn't exist or an error occured.</div>
+			<div>
+				<div class="link">Go back</div>, or head over to <div class="link" (click)="goHome();">Home</div> to choose a new direction.
+			</div>
+		</div>
+		<div *ngIf="errorCode == 403" class="no-access">
+			<div>Accessing this page is NOT allowed. Please contact to administrator for help.</div>
+			<div>
+				<div class="link" (click)="goBack();">Go back</div>, or head over to <div class="link" (click)="goHome();">Home</div> to choose a new direction.
+			</div>
+		</div>
+	</div>
+</div>
+
+

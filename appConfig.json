@@ -1,0 +1,4 @@
+{
+	"NpgsqlConnection": "Server=10.211.55.8;port=5432;Database=demoDb;User Id=postgres;Password=111;",
+	"serviceAddressDev": "0.0.0.0:50090"
+}

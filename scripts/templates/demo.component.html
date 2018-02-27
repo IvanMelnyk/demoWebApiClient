@@ -1,0 +1,13 @@
+<div style="display: flex; flex:1;flex-direction: column;">
+	<div class="header">
+		<div>
+			<div *ngIf="_cs.authState" class="user">User name: {{fullName}}</div>
+			<button (click)="changeAuthState()">{{_cs.authState ? "Logout" : "LogIn" }}</button>
+		</div>
+		
+
+	</div>
+	<div class="content">
+			<router-outlet></router-outlet>
+	</div>
+</div>

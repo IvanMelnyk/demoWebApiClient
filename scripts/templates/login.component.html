@@ -1,0 +1,118 @@
+<div class="container" [ngClass]="{ 'processing': isProcessing }">
+	<div class="row">
+		<div class="col-sm-6 col-md-4 col-md-offset-4">
+			<div class="account-wall" #accountWall>
+				
+				<div *ngIf="loginAction">
+					<h5 class="text-center login-title">Sign in to get started.</h5>
+					<form [formGroup]="loginForm" class="form-signin" data-toggle="validator" role="form" (ngSubmit)="submitLogin(loginForm.value)">
+						<div class="form-group">
+							<input type="text" class="form-control login-input" [ngClass]="{ 'has-error': loginForm.controls['login'].hasError('required') && loginForm.controls['login'].touched }" placeholder="Email or phone number" required autofocus [formControl]="loginForm.controls['login']">
+						</div>
+						<div class="form-group">
+							<input type="password" class="form-control login-input" [ngClass]="{ 'has-error': loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched }" placeholder="Password" required [formControl]="loginForm.controls['password']">
+						</div>
+						<div class="row" style="margin-top: 10px;">
+							<!--<bSwitch [formControl]="loginForm.controls['keepSigned']"
+									 [switch-size]="'mini'"
+									 [btn-width]="14"
+									 [btn-height]="14"
+									 [glyphicon]="true"
+									 [switch-on-text]="''"
+									 [switch-off-text]="''"
+									 [switch-handle-width]="12"
+									 [switch-on-color]="'success'"
+									 [switch-off-color]="'default'">
+							</bSwitch>-->
+							<label class="kms" (click)="onKeepSignedClick($event)">Keep me signed in</label>
+						</div>
+						<div class="bottom-container">
+							<div *ngIf="loginForm.controls['login'].hasError('required') && loginForm.controls['login'].touched" class="alert alert-warning">
+								You must enter login.
+							</div>
+							<div *ngIf="loginForm.controls['login'].hasError('minlength') && loginForm.controls['login'].touched" class="alert alert-warning">
+								Your login must be at least 6 characters long.
+							</div>
+							<div *ngIf="loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched" class="alert alert-warning">
+								You must enter password.
+							</div>
+							<div *ngIf="loginForm.controls['password'].hasError('minlength') && loginForm.controls['password'].touched" class="alert alert-warning">
+								Your password must be at least 6 characters long.
+							</div>
+							<div class="form-group">
+								<button class="btn btn-lg btn-block login-btn" type="submit" [disabled]="!loginForm.valid">
+									Continue
+								</button>
+								<div *ngIf="canRegister" class="new-account-label" (click)="routeToRegister()">Create an account</div>
+							</div>
+						</div>
+					</form> <!--end of form-->
+					<div class="error-message">
+						{{errorMessage}}
+					</div>
+				</div>
+				<div *ngIf="!loginAction && canRegister">
+					<h5 class="text-center login-title">Create an account</h5>
+					<form [formGroup]="registerForm" class="form-signin" data-toggle="validator" role="form" (ngSubmit)="submitRegister(registerForm.value)">
+						<div class="form-group">
+							<input type="text" class="form-control login-input" [ngClass]="{ 'has-error': registerForm.controls['login'].touched && (registerForm.controls['login'].hasError('required') || !registerForm.controls['login'].valid)}" placeholder="Email or phone number" required autofocus [formControl]="registerForm.controls['login']">
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control login-input" [ngClass]="{ 'has-error': registerForm.controls['firstName'].touched && (registerForm.controls['firstName'].hasError('required') || !registerForm.controls['firstName'].valid) }" placeholder="First name" required autofocus [formControl]="registerForm.controls['firstName']">
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control login-input" [ngClass]="{ 'has-error': registerForm.controls['lastName'].touched && (registerForm.controls['lastName'].hasError('required') || !registerForm.controls['lastName'].valid) }" placeholder="Last name" required autofocus [formControl]="registerForm.controls['lastName']">
+						</div>
+						<div class="form-group">
+							<input type="password" class="form-control login-input" [ngClass]="{ 'has-error': registerForm.controls['password'].touched && (registerForm.controls['password'].hasError('required') || !registerForm.controls['password'].valid) }" placeholder="Password" required [formControl]="registerForm.controls['password']">
+						</div>
+						<div class="form-group">
+							<input type="password" class="form-control login-input" [ngClass]="{ 'has-error': registerForm.controls['confirmPassword'].touched && (registerForm.controls['confirmPassword'].hasError('required') || !registerForm.controls['confirmPassword'].valid) }"  placeholder="Confirm password" required [formControl]="registerForm.controls['confirmPassword']" >
+						</div>
+						<div class="bottom-container">
+							<div *ngIf="registerForm.controls['login'].hasError('required') && registerForm.controls['login'].touched" class="alert alert-warning">
+								Please enter an email address.
+							</div>
+							<div *ngIf="registerForm.controls['login'].hasError('minlength') && registerForm.controls['login'].touched" class="alert alert-warning">
+								Your email address is invalid. Please enter a valid address. Your login must be at least 6 characters long.
+							</div>
+							<div *ngIf="registerForm.controls['firstName'].touched && (registerForm.controls['firstName'].hasError('required') || registerForm.controls['firstName'].hasError('minlength'))" class="alert alert-warning">
+								Please enter your name.
+							</div>
+							<div *ngIf="registerForm.controls['lastName'].touched && (registerForm.controls['lastName'].hasError('required') || registerForm.controls['lastName'].hasError('minlength'))" class="alert alert-warning">
+								Please enter your last name.
+							</div>
+							<div *ngIf="registerForm.controls['password'].hasError('required') && registerForm.controls['password'].touched" class="alert alert-warning">
+								Please enter a password.
+							</div>
+							<div *ngIf="registerForm.controls['password'].hasError('minlength') && registerForm.controls['password'].touched" class="alert alert-warning">
+								Your password must be at least 6 characters long, be of mixed case and also contain special and alphanumeric characters.
+							</div>
+							<div *ngIf="!registerForm.controls['password'].valid && registerForm.controls['password'].touched" class="alert alert-warning">
+								Your password must be valid.
+							</div>
+							<div *ngIf="registerForm.controls['confirmPassword'].hasError('required') && registerForm.controls['confirmPassword'].touched" class="alert alert-warning">
+								You must enter confirm password.
+							</div>
+							<div *ngIf="registerForm.controls['confirmPassword'].hasError('minlength') && registerForm.controls['confirmPassword'].touched" class="alert alert-warning">
+								Your confirm password must be at least 6 characters long.
+							</div>
+							<div *ngIf="registerForm.controls['confirmPassword'].notEquivalent && registerForm.controls['confirmPassword'].touched" class="alert alert-warning">
+								Your password and confirmation password do not match.
+							</div>
+							<div class="form-group">
+								<button class="btn btn-lg btn-block login-btn" type="submit" [disabled]="!registerForm.valid">
+									Continue
+								</button>
+								<div class="new-account-label" (click)="routeToLogin()">Back to Login</div>
+							</div>
+						</div>
+					</form> <!--end of form-->
+					<div class="error-message">
+						{{errorMessage}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
