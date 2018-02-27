@@ -62,6 +62,7 @@ namespace WebApiClient.Auth.Controllers
 		}
 
 		[HttpGet]
+        [AllowAnonymous]
 		public async Task<bool> CheckAutorization()
 		{
 			var user = await _userManager.GetUserAsync(User);

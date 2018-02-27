@@ -19,13 +19,14 @@ namespace WebApiClient.Extentions
 	{
 		public RawRequestBodyFormatter()
 		{
-			/*SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/plain"));
+			SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/plain"));
 			SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/x-www-form-urlencoded"));
 			SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/json"));
 			SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/octet-stream"));
 			SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/arraybuffer"));
 			SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/x-binary"));
-			SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/protobuf"));*/
+			SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/protobuf"));
+			SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/x-protobuf"));
 		}
 
 

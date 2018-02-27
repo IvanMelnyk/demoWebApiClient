@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using WebApiClient.Auth.Models;
 using Demo.Services.Grpc;
-
+using System.IO;
 
 namespace WebApiClient.Controllers
 {
@@ -29,7 +29,10 @@ namespace WebApiClient.Controllers
 
 		[HttpPost]
         [ValidateAntiForgeryToken]
-		public async Task<IActionResult> CreateDemoRecord([FromBody] byte[] sourcesContentsRequestBytes) {
+		public async Task<IActionResult> CreateDemoRecord([FromBody] string base64Input) {
+			byte[] sourcesContentsRequestBytes = null;
+			string result = result = base64Input.Replace("\"", string.Empty);
+ 			sourcesContentsRequestBytes = Convert.FromBase64String(result);
 			if (sourcesContentsRequestBytes == null) return BadRequest("No data received!");
 			try {
 				var record = DemoRecord.Parser.ParseFrom(sourcesContentsRequestBytes);
