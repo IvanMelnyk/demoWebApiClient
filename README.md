@@ -5,7 +5,9 @@ This application would not work without initialize Postgresql database, so you n
 <p>Thanks to that https://github.com/aspnet/Entropy/tree/dev/samples/Antiforgery.Angular1 project, there the way to do it<p/>
 <p>We dont have any "Model-View-Controller" staff here, so I use Angular/Typescript to create client GUI</p>
 <p>I use custom GRPC service as dataprovider. Endpoint address is on "appConfig.json"<p/>
-To run this project type the folowing: "dotnet run" 
-To update protobufs-generated proxy classes you need to run "buildProtobufs.sh" script
-
+To run this project type the folowing: "dotnet run"<br/>
+To update protobufs-generated proxy classes you need to run "buildProtobufs.sh" script<br/>
+To update DB scheme run the following: <br/>
+dotnet ef migrations add CustomScheme -o Auth/Data/Migrations<br/>
+dotnet ef database update
 
