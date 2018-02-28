@@ -13,6 +13,7 @@ namespace WebApiClient.Auth.Models
 		public string last_name { set; get; }
 		public DateTimeOffset expire_time { set; get; }
 		public DateTimeOffset join_date { get; set; }
+		public int lang_specs { get; set; }
 
 		/*public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser, long> manager, string authenticationType)
 		{

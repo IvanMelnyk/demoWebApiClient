@@ -18,15 +18,14 @@ namespace WebApiClient
         public static DemoManagement.DemoManagementClient DemoManagementClient = null;
         public static void Main(string[] args)
         {
+            BuildWebHost(args).Run();
+        }
+
+        public static IWebHost BuildWebHost(string[] args) {
              IConfigurationRoot config  = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("hostingConfig.json", optional: true)
                 .Build();
-
-            BuildWebHost(args,config).Run();
-        }
-
-        public static IWebHost BuildWebHost(string[] args,IConfigurationRoot config) {
             return WebHost.CreateDefaultBuilder(args)
                 .UseKestrel()
                 .UseConfiguration(config)

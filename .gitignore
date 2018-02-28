@@ -15,6 +15,7 @@ ClientBin/
 *.pfx
 *.publishsettings
 node_modules/
+Auth/Data/MIgrations/
 publish/
 wwwroot/
 .vscode/
