@@ -151,13 +151,13 @@ export class CommonDataService {
 		let url: string = `${this._config.grpcapiEndpoint}CreateDemoRecord`;
 		let options: RequestOptions = new RequestOptions(new RequestOptions() );
 		let headers: Headers = new Headers();
-		//headers.append("Content-Type", RequestType.TEXT);
+		headers.append("Content-Type", RequestType.Binary);
 		headers.append("X-XSRF-Token", CoockieManager.getCookie("X-XSRF-Token"));
 		options.headers = headers;
 		let uint8Array: Uint8Array = DemoRecord.encode(data).finish();
-		var b64encoded = btoa(String.fromCharCode.apply(null, uint8Array));
+		let blob: Blob = new Blob([uint8Array], {type: RequestType.ArrayBuffer});
 		options.responseType = ResponseContentType.Text;
-		return this._http.post(url,b64encoded,options)
+		return this._http.post(url,blob,options)
 			.map(this.onSuccessRequest)
 			.catch(this.onError);
 	}
@@ -165,7 +165,7 @@ export class CommonDataService {
 	//-------------------------------------------------------------------------------------
 	private onSuccessRequest(res: Response): boolean {
 		let response = res.text.toString();
-		console.log(response);
+		//console.log(response);
 		return true;
 	}
 

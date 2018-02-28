@@ -10,10 +10,15 @@ ClientBin/
 ~$*
 *~
 *.dbmdl
+*.DS_STORE
 *.dbproj.schemaview
 *.pfx
 *.publishsettings
 node_modules/
+publish/
+wwwroot/
+.vscode/
+.vs/
 orleans.codegen.cs
 
 # User-specific files (MonoDevelop/Xamarin Studio)

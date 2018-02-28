@@ -29,20 +29,17 @@ namespace WebApiClient.Controllers
 
 		[HttpPost]
         [ValidateAntiForgeryToken]
-		public async Task<IActionResult> CreateDemoRecord([FromBody] string base64Input) {
-			byte[] sourcesContentsRequestBytes = null;
-			string result = result = base64Input.Replace("\"", string.Empty);
- 			sourcesContentsRequestBytes = Convert.FromBase64String(result);
-			if (sourcesContentsRequestBytes == null) return BadRequest("No data received!");
+		public async Task<IActionResult> CreateDemoRecord([FromBody] byte[] sourcesContentsRequestBytes) {
+			if (sourcesContentsRequestBytes == null) return BadRequest("No binary data received!");
 			try {
 				var record = DemoRecord.Parser.ParseFrom(sourcesContentsRequestBytes);
-				if (record.Data.Text == null) return BadRequest("No data received!");
-				if (record.Title == null) record.Title = "No title";
+				if (record.Data.Text == null || record.Data.Text == "") return BadRequest("An empty content received!");
+				if (record.Title == null || record.Title == "") record.Title = "No title";
 				Program.DemoManagementClient.InsertDemoRecord(record);
 				return Ok("New DemoRecord created successfuly!");
 			}
 			catch( Exception ex) {
-				return BadRequest($"Error occured on create new DemoRecord. Exception: ${ex.Message}");
+				return BadRequest($"Error occured on create new DemoRecord. Exception: {ex.Message}");
 			}
 		}
 	}
