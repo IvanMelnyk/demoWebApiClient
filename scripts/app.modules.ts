@@ -9,7 +9,9 @@ import { NotFoundComponent }					from "./components/notfound.component";
 import { LoginComponent }						from "./components/login.component";
 import { routing }								from "./routes";
 // #### Services
-import { CommonDataService }							from "./services/commondata.service";
+import { CommonDataService }					from "./services/commondata.service";
+import { GRPCDataService }						from "./services/grpc.service";
+import { DataProviderService }					from "./services/dataprovider.service";
 import { HttpModule }							from "@angular/http";
 import { ApplicationConfig } from "./app.config";
 import { CanActivateViaAuthGuard, CanActivateLoginViaAuthGuard } from "./services/logger.guard.service";
@@ -30,10 +32,12 @@ import { CanActivateViaAuthGuard, CanActivateLoginViaAuthGuard } from "./service
 		HomeComponent
 	],
 	providers: [
-		CommonDataService,
 		ApplicationConfig,
 		CanActivateViaAuthGuard,
-		CanActivateLoginViaAuthGuard
+		CanActivateLoginViaAuthGuard,
+		CommonDataService,
+		GRPCDataService,
+		DataProviderService
 	],
 	schemas: [CUSTOM_ELEMENTS_SCHEMA],
 	bootstrap: [ DemoAppComponent ]

@@ -16,6 +16,7 @@ export class ApplicationConfig {
 
 	public authenticated: boolean = false;
 	public defaultRoute: string = "/home/";
+	public configRoute: string = "/config/";
 	public loginRoute: string = "/login/";
 	public registerRoute: string = "/login/register";
 	/** Enable authorization */

@@ -83,15 +83,14 @@ export class DemoAppComponent implements OnInit {
 			// the '+' character; matches the behaviour of browser form submissions.
 			urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
 
-		this._cs.logOutRequest(urlEncodedData).subscribe(
-			(value: boolean) => this.onLogoutOut(value as boolean),
-			(error: ErrorEvent) => this.onError("login attempt", error as ErrorEvent));
+			this._cs.logOutRequest(urlEncodedData).subscribe(
+				(value: boolean) => this.onLogoutOut(value as boolean),
+				(error: ErrorEvent) => this.onError("login attempt", error as ErrorEvent));
 		}
 		else {
 			this._router.navigate([this._config.loginRoute]);
 		}
 	}
-
 
 	// ----------------------------------------------------------------------------------------------
 	private onLogoutOut(value: boolean) {
@@ -115,14 +114,16 @@ export class DemoAppComponent implements OnInit {
 
 	//-------------------------------------------------------------------------------------
 	/** Process login request. */
-	private onUserInfoLoaded(res: UserViewModel)  {
-		if (!res) {
+	private onUserInfoLoaded(user: UserViewModel)  {
+		if (!user) {
+			this._cs.userInfoBs.next(null);
 			CoockieManager.removeAccToken();
 			this._cs.authStateBs.next(false);
 		}
 		else {
-			this.fullName = res.firstName + " " + res.lastName;
-			this.email = res.email;
+			this.fullName = user.firstName + " " + user.lastName;
+			this.email = user.email;
+			this._cs.userInfoBs.next(user);
 		}
 	}
 

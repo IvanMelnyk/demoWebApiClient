@@ -4,7 +4,6 @@ import { Observable } from "rxjs/Observable";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { CanActivate, CanLoad, ActivatedRoute, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree  } from '@angular/router';
 import { ApplicationConfig } from ".././app.config";
-import { AuthenticationState, UserViewModel} from "../model/misc";
 import {
 	Http,
 	HttpModule,
@@ -18,13 +17,11 @@ import {
 } from "@angular/http";
 import {
 	CoockieManager,
-	RequestAction,
-	AuthManager,
-	AuthAction,
-	UserInfo
+	AuthenticationState, 
+	UserViewModel,
+	RequestType
 } from "../model/misc";
-
-import { DemoContent, DemoRecord } from "../model/proto/demo.types";
+import { request } from 'https';
 
 @Injectable()
 export class CommonDataService {
@@ -35,11 +32,18 @@ export class CommonDataService {
 
 	/** Auth state behaviors subject. */
 	public authStateBs: BehaviorSubject<boolean> = new BehaviorSubject(null);
+	/* */
+	public userInfoBs: BehaviorSubject<UserViewModel> = new BehaviorSubject(null);
 
 	//-------------------------------------------------------------------------------------
 	public get authState(): boolean { return this.authStateBs.value; }
 	//-------------------------------------------------------------------------------------
 	public set authState(value: boolean) { if (value) this.authStateBs.next(value); }
+
+	//-------------------------------------------------------------------------------------
+	public get userInfo(): UserViewModel { return this.userInfoBs.value; }
+	//-------------------------------------------------------------------------------------
+	public set userInfo(value: UserViewModel) { if (value) this.userInfoBs.next(value); }
 
 
 	//-------------------------------------------------------------------------------------
@@ -146,29 +150,6 @@ export class CommonDataService {
 		return true;
 	}
 
-	//-------------------------------------------------------------------------------------
-	public newDemoRecordRequest(data: DemoRecord): Observable<boolean> {
-		let url: string = `${this._config.grpcapiEndpoint}CreateDemoRecord`;
-		let options: RequestOptions = new RequestOptions(new RequestOptions() );
-		let headers: Headers = new Headers();
-		headers.append("Content-Type", RequestType.Binary);
-		headers.append("X-XSRF-Token", CoockieManager.getCookie("X-XSRF-Token"));
-		options.headers = headers;
-		let uint8Array: Uint8Array = DemoRecord.encode(data).finish();
-		let blob: Blob = new Blob([uint8Array], {type: RequestType.ArrayBuffer});
-		options.responseType = ResponseContentType.Text;
-		return this._http.post(url,blob,options)
-			.map(this.onSuccessRequest)
-			.catch(this.onError);
-	}
-
-	//-------------------------------------------------------------------------------------
-	private onSuccessRequest(res: Response): boolean {
-		let response = res.text.toString();
-		//console.log(response);
-		return true;
-	}
-
 	//-------------------------------------------------------------------------------------------------
 	/**
 	 * In a real world app, we might use a remote logging infrastructure
@@ -183,10 +164,3 @@ export class CommonDataService {
 	}
 }
 
-export enum RequestType {
-	FORM = "application/x-www-form-urlencoded",
-	JSON = "application/json",
-	TEXT = "application/text",
-	Binary="application/octet-stream",
-	ArrayBuffer="arraybuffer"
-}

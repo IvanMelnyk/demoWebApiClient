@@ -55,7 +55,8 @@ namespace WebApiClient.Auth.Controllers
 				{
 					Email = user.Email,
 					FirstName = user.first_name,
-					LastName = user.last_name
+					LastName = user.last_name,
+                    IsAdmin = !await _userManager.IsInRoleAsync(user, "Admin")
 				};
 				return viewModel;
 			}

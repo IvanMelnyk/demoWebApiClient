@@ -6,7 +6,9 @@ import { Location } from '@angular/common';
 import { Observable } from "rxjs/Observable";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { CommonDataService } from "../services/commondata.service";
+import { GRPCDataService } from "../services/grpc.service";
 import { DemoContent, DemoRecord } from "../model/proto/demo.types";
+import { UserViewModel, HttpResponse} from "../model/misc";
 
 @Component({
 	selector: "demo-home",
@@ -22,7 +24,8 @@ export class HomeComponent {
 		private _config: ApplicationConfig,
 		private _location: Location,
 		private _activatedRoute: ActivatedRoute,
-		private _cs: CommonDataService) {
+		private _cs: CommonDataService,
+		private _gs: GRPCDataService) {
 
 	}
 
@@ -36,7 +39,7 @@ export class HomeComponent {
 		let content = new DemoContent();
 		content.text = "Demo record!";
 		record.data = content;
-		this._cs.newDemoRecordRequest(record).subscribe(
+		this._gs.newDemoRecordRequest(record).subscribe(
 				(value: boolean) => this.onSuccessRequest(value as boolean),
 				(error: ErrorEvent) => this.onError("rcreate demorecord", error as ErrorEvent));
 		
