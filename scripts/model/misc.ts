@@ -35,30 +35,6 @@ export class CoockieManager {
 }
 
 //----------------------------------------------------------------------------------------------
-export enum AuthenticationState {
-	Success,
-	Failed,
-	RefreshToken
-}
-
-//----------------------------------------------------------------------------------------------
-export enum TRLState {
-	Default = 0,
-	Empty,
-	Ready,
-	Loading,
-	Error,
-	NewPPeak,
-	NewPWave,
-	NewQRSWave,
-	NewTPeak,
-	NewTWave,
-	NewQPeak,
-	NewRPeak,
-	NewSPeak
-}
-
-//----------------------------------------------------------------------------------------------
 export class UserViewModel
 {
 	public email: string;
@@ -74,4 +50,12 @@ export enum RequestType {
 	TEXT = "application/text",
 	Binary="application/octet-stream",
 	ArrayBuffer="arraybuffer"
+}
+
+
+export class MetaData {
+	public recordId: Long | number;
+	public title: string;
+	public langs: string[];
+	public stage: boolean;
 }

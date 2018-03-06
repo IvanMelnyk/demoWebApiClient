@@ -1,12 +1,15 @@
 ﻿import { NgModule, CUSTOM_ELEMENTS_SCHEMA }		from "@angular/core";
 import { FormsModule, ReactiveFormsModule }		from "@angular/forms";
 import { BrowserModule }						from "@angular/platform-browser";
+import { BootstrapModalModule }					from 'ng2-bootstrap-modal';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // #### Application
 import { DemoAppComponent }						from "./components/demoapp.component";
 import { HomeComponent }						from "./components/home.component";
 import { NotFoundComponent }					from "./components/notfound.component";
 import { LoginComponent }						from "./components/login.component";
+import { NavigationPanelComponent }				from "./components/navigation.panel.component";
+import { RecordCreatorComponent }				from "./components/record.creator.component";
 import { routing }								from "./routes";
 // #### Services
 import { CommonDataService }					from "./services/commondata.service";
@@ -18,19 +21,25 @@ import { CanActivateViaAuthGuard, CanActivateLoginViaAuthGuard } from "./service
 
 @NgModule({
 	imports: [
-		BrowserModule, 
+		BrowserModule,
+		BootstrapModalModule.forRoot({container:document.body}),
+		BrowserAnimationsModule,
 		routing, 
 		HttpModule,
 		FormsModule,
-		ReactiveFormsModule, 
-		BrowserAnimationsModule
+		ReactiveFormsModule		
 	],
 	declarations: [
 		DemoAppComponent,
 		LoginComponent,
 		NotFoundComponent,
-		HomeComponent
+		HomeComponent,
+		NavigationPanelComponent,
+		RecordCreatorComponent
 	],
+	entryComponents: [
+		RecordCreatorComponent
+    ],
 	providers: [
 		ApplicationConfig,
 		CanActivateViaAuthGuard,

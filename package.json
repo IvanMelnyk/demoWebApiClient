@@ -28,12 +28,12 @@
 		"zone.js": "0.8.18",
 		"bootstrap": "3.3.7",
 		"ng2-bootstrap": "1.6.3",
+		"ng2-bootstrap-modal": "1.0.1",
 		"execSync": "1.0.2",
 		"ie-shim": "0.1.0",
 		"interpret": "1.0.4",
 		"json-schema-to-typescript": "4.4.1",
 		"ng-sidebar": "2.0.0",
-		"angular2-recaptcha": "0.2.0",
 		"text-encoding-shim": "1.0.0"
 	},
 	"devDependencies": {

@@ -1,6 +1,7 @@
 // /scripts/components/home.component.ts
-import { Component, Inject } from "@angular/core";
+import { Component, Inject, ViewContainerRef } from "@angular/core";
 import { ActivatedRoute, Router, UrlSegment } from "@angular/router";
+import { DialogService } from "ng2-bootstrap-modal";
 import { ApplicationConfig } from ".././app.config";
 import { Location } from '@angular/common';
 import { Observable } from "rxjs/Observable";
@@ -8,7 +9,8 @@ import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { CommonDataService } from "../services/commondata.service";
 import { GRPCDataService } from "../services/grpc.service";
 import { DemoContent, DemoRecord } from "../model/proto/demo.types";
-import { UserViewModel, HttpResponse} from "../model/misc";
+import { UserViewModel } from "../model/misc";
+import { RecordCreatorComponent } from "./record.creator.component";
 
 @Component({
 	selector: "demo-home",
@@ -16,7 +18,7 @@ import { UserViewModel, HttpResponse} from "../model/misc";
 })
 
 // -------------------------------------------------------------------------------------------------
-// NotFoundComponent
+// HomeComponent
 // -------------------------------------------------------------------------------------------------
 export class HomeComponent {
 
@@ -25,7 +27,8 @@ export class HomeComponent {
 		private _location: Location,
 		private _activatedRoute: ActivatedRoute,
 		private _cs: CommonDataService,
-		private _gs: GRPCDataService) {
+		private _gs: GRPCDataService,
+		private dialogService:DialogService) {
 
 	}
 
@@ -35,14 +38,41 @@ export class HomeComponent {
 	 * Called once, after the first ngOnChanges.
 	 */
 	ngOnInit() {
-		let record = new DemoRecord();
-		let content = new DemoContent();
-		content.text = "Demo record!";
-		record.data = content;
-		this._gs.newDemoRecordRequest(record).subscribe(
-				(value: boolean) => this.onSuccessRequest(value as boolean),
-				(error: ErrorEvent) => this.onError("rcreate demorecord", error as ErrorEvent));
 		
+	}
+
+	//-------------------------------------------------------------------------------------
+	openNewDialog() {
+		let disposable = this.dialogService.addDialog(RecordCreatorComponent, 
+			{
+				createRecordCallback:this.newDemoDecodRequest.bind(this)
+			},
+			{
+				closeByClickingOutside: true
+			})
+			.subscribe((isConfirmed)=>{
+				//We get dialog result
+				if(isConfirmed) {
+					// todo update navogation list
+				}
+				else {
+					// todo nothing
+				}
+			});
+		//We can close dialog calling disposable.unsubscribe();
+		//If dialog was not closed manually close it by timeout
+		//setTimeout(()=>{
+			//disposable.unsubscribe();
+		//},10000);
+	}
+
+
+	//-------------------------------------------------------------------------------------
+	private newDemoDecodRequest(data: DemoRecord) {
+		if (!data) return;
+		this._gs.newDemoRecordRequest(data).subscribe(
+			(value: boolean) => this.onSuccessRequest(value as boolean),
+			(error: ErrorEvent) => this.onError("rcreate demorecord", error as ErrorEvent));
 	}
 
 	//-------------------------------------------------------------------------------------

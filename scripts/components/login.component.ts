@@ -7,8 +7,7 @@ import {
 } from "@angular/router";
 import { FormsModule, FormGroup, FormBuilder, Validators } from "@angular/forms";
 import {
-	CoockieManager, RequestAction, AuthManager, AuthAction,
-	UserInfo, ErrorParser, ModelStateParser, AuthenticationState
+	CoockieManager
 } from "../model/misc";
 import { Subscription, BehaviorSubject, Observable } from "rxjs";
 import { CommonDataService } from "../services/commondata.service";
@@ -209,19 +208,6 @@ export class LoginComponent implements OnInit {
 	private requestFail(error: any) {
 		// todo enable feedback form + show failure message
 		console.log("fail");
-		this.isProcessing = false;
-	}
-	
-	//-------------------------------------------------------------------------------------------------
-	private onRegisterResponse(xhr: XMLHttpRequest, event: Event) {
-		if (xhr.status == 200) {
-			this.routeToLogin();
-		}
-		else {
-			console.log("Message: " + xhr.response);
-			let error = new ModelStateParser().fromJson(xhr.responseText);
-			this.errorMessage = error.ModelState.join("<br>");
-		}
 		this.isProcessing = false;
 	}
 	

@@ -7,8 +7,7 @@ import {
 } from "@angular/router";
 
 import {
-	CoockieManager, RequestAction, AuthManager, AuthAction, UserViewModel,
-	UserInfo, ErrorParser, ModelStateParser, AuthenticationState
+	CoockieManager, UserViewModel
 } from "../model/misc";
 import { Subscription, BehaviorSubject, Observable } from "rxjs";
 import { CommonDataService } from "../services/commondata.service";
@@ -19,7 +18,7 @@ import { CommonDataService } from "../services/commondata.service";
 })
 
 //-------------------------------------------------------------------------------------------------
-// EcgAppComponent
+// DemoAppComponent
 //-------------------------------------------------------------------------------------------------
 export class DemoAppComponent implements OnInit {
 
@@ -67,7 +66,6 @@ export class DemoAppComponent implements OnInit {
 				this._router.navigate([this._config.defaultRoute]);
 				break;
 			case false:
-				CoockieManager.removeAccToken();
 				this._router.navigate([this._config.loginRoute]);
 			break;
 		}
@@ -94,7 +92,6 @@ export class DemoAppComponent implements OnInit {
 
 	// ----------------------------------------------------------------------------------------------
 	private onLogoutOut(value: boolean) {
-		CoockieManager.removeAccToken();
 		this._cs.authStateBs.next(false);
 	}
 
@@ -117,7 +114,6 @@ export class DemoAppComponent implements OnInit {
 	private onUserInfoLoaded(user: UserViewModel)  {
 		if (!user) {
 			this._cs.userInfoBs.next(null);
-			CoockieManager.removeAccToken();
 			this._cs.authStateBs.next(false);
 		}
 		else {

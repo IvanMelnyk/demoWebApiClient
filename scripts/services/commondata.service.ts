@@ -17,7 +17,6 @@ import {
 } from "@angular/http";
 import {
 	CoockieManager,
-	AuthenticationState, 
 	UserViewModel,
 	RequestType
 } from "../model/misc";

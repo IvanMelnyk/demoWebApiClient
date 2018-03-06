@@ -163,7 +163,7 @@ export class GRPCDataService {
 	}
 
 	//-------------------------------------------------------------------------------------
-	public LookupNextDemoRecord(): Observable<DemoRecord | string> {
+	public lookupNextDemoRecord(): Observable<DemoRecord | string> {
 		let url: string = `${this._config.grpcapiEndpoint}GetMetadataContent`;
 		let options: RequestOptions = new RequestOptions(new RequestOptions() );
 		let headers: Headers = new Headers();

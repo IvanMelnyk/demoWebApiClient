@@ -1,0 +1,11 @@
+<div class="filers">
+
+</div>
+<div class="content">
+	<div *ngFor="let item of metaList;index as i;trackBy: trackByItem"
+		class="meta-item" (click)="loadInterims(i)">
+		<div class="title">{{item.title}}</div>
+		<div class="lang">{{item.langs}}</div>
+		<div class="stage" *ngClass="{ 'yes': item.stage == true }"></div>
+	</div>
+</div>
