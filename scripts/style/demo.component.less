@@ -1,21 +1,11 @@
 demo-app {
     display: flex;
-	flex:1;
-	flex-flow: row wrap;
+	flex-direction: column;
+	height: 100%;
 }
 
 /* We tell all items to be 100% width, via flex-basis */
 demo-app> * {
 	flex: 1 100%;
-}
-
-demo-app .header {
-	height: 50px;
-	//widows: 100%;
-	background-color: green;
-}
-
-demo-app .content {
-	display: flex; 
-	flex:1;
+	height: 100%;
 }

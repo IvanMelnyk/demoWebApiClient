@@ -22,9 +22,6 @@ import { CommonDataService } from "../services/commondata.service";
 //-------------------------------------------------------------------------------------------------
 export class DemoAppComponent implements OnInit {
 
-	//private authMan: AuthManager = new AuthManager();
-	private fullName: string = "NoUser";
-	private email: string = "";
 	/** Auth subscription. */
 	private isAuthenticatedSubs: Subscription = null;
 
@@ -56,6 +53,8 @@ export class DemoAppComponent implements OnInit {
 			});
 	}
 
+	
+
 	//-------------------------------------------------------------------------------------------------
 	private onAuthStatusChange(value: boolean) {
 		if (value == null)
@@ -69,30 +68,6 @@ export class DemoAppComponent implements OnInit {
 				this._router.navigate([this._config.loginRoute]);
 			break;
 		}
-	}
-
-	private changeAuthState() {
-		if (this._cs.authState) {
-			let urlEncodedData: string = "";
-			let urlEncodedDataPairs: any[] = [];
-			// Turn the data object into an array of URL-encoded key/value pairs.
-			urlEncodedDataPairs.push(encodeURIComponent("__RequestVerificationToken") + '=' + encodeURIComponent(CoockieManager.getCookie("X-XSRF-Token")));
-			// Combine the pairs into a single string and replace all %-encoded spaces to 
-			// the '+' character; matches the behaviour of browser form submissions.
-			urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
-
-			this._cs.logOutRequest(urlEncodedData).subscribe(
-				(value: boolean) => this.onLogoutOut(value as boolean),
-				(error: ErrorEvent) => this.onError("login attempt", error as ErrorEvent));
-		}
-		else {
-			this._router.navigate([this._config.loginRoute]);
-		}
-	}
-
-	// ----------------------------------------------------------------------------------------------
-	private onLogoutOut(value: boolean) {
-		this._cs.authStateBs.next(false);
 	}
 
 	//----------------------------------------------------------------------------------------------
@@ -117,10 +92,12 @@ export class DemoAppComponent implements OnInit {
 			this._cs.authStateBs.next(false);
 		}
 		else {
-			this.fullName = user.firstName + " " + user.lastName;
-			this.email = user.email;
 			this._cs.userInfoBs.next(user);
 		}
+	}
+
+	ngOnDestroy(){
+		if (this.isAuthenticatedSubs) this.isAuthenticatedSubs.unsubscribe();
 	}
 
 	//----------------------------------------------------------------------------------------------

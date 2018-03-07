@@ -1,5 +1,5 @@
 // /Scripts/components/ecgapp.component.ts
-import { Component, OnInit, ViewChild, ElementRef, Renderer } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef, Renderer,Input } from "@angular/core";
 import { ApplicationConfig } from ".././app.config";
 import {
 	ActivatedRoute, Router, NavigationCancel, NavigationEnd, NavigationStart,
@@ -19,7 +19,7 @@ import {
 } from "../model/proto/demo.types";
 
 @Component({
-	selector: "nav-panel",
+	selector: "navpanel",
 	templateUrl: "data/templates/navigation.panel.component.html"
 })
 
@@ -31,6 +31,12 @@ export class NavigationPanelComponent implements OnInit {
 	private metaList: MetaData[];
 	private skip: number;
 	private limit: number;
+
+	private newRecordCallback: any;
+	@Input("newRecordCallback") set setNewRecordCallback(value: any) { this.newRecordCallback = value; }
+
+	private refreshCallback: any;
+	@Input("refreshCallback") set setRefreshCallback(value: any) { this.refreshCallback = value; }
 
 	constructor (private _cs: CommonDataService,
 		private _router: Router,

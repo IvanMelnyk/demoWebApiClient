@@ -1,2 +1,38 @@
-Welome to home page!
-<button (click)="openNewDialog()">Open window</button>
+<div class="header">
+	<div *ngIf="_cs.authState">
+		<div  class="user">User name: {{fullName}}</div>
+		<button (click)="changeAuthState()">Logout</button>
+	</div>
+</div>
+<div class="body">
+	<div class="navigation" *ngIf="_isAdmin">
+		<div class="controls">
+			<button (click)="openNewDialog()">Open window</button>
+		</div>
+		<navpanel></navpanel>
+	</div>
+	<div class="record">
+		<div class="item">
+			<div class="header">
+				Source header
+			</div>
+			<div class="data">
+
+			</div>
+		</div>
+		<div class="item">
+			<div class="header">
+				Interim header
+			</div>
+			<div class="data">
+		
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
